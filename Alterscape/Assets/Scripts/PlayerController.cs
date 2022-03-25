@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Physics.gravity = new Vector3(0.0f,-9.8f*3.0f,0.0f);
+        Physics.gravity = new Vector3(0.0f, -9.8f * 3.0f, 0.0f);
         void EnableJump()
         {
             _canJump = true;
@@ -102,18 +102,24 @@ public class PlayerController : MonoBehaviour
     public void OnMove(CallbackContext ctx)
     {
         _moveVec = ctx.ReadValue<Vector2>();
-        
-        if(_moveVec.magnitude > 0.0f)
-            animator.SetBool("Run",true);
+
+        if (_moveVec.magnitude > 0.0f)
+            animator.SetBool("Run", true);
         else
-            animator.SetBool("Run",false);
+            animator.SetBool("Run", false);
     }
 
     public void OnJump(CallbackContext ctx)
     {
-        if (!_canJump)
+        if (!_canJump || !ctx.performed)
             return;
-        rigidbody.AddForce(Vector3.up * jumpScalar, ForceMode.Impulse);
+        IEnumerator Wait()
+        {
+            yield return new WaitForSeconds(0.7f);
+            rigidbody.AddForce(Vector3.up * jumpScalar, ForceMode.Impulse);
+        }
+        StartCoroutine(Wait());
+        animator.SetTrigger("Jump");
     }
 
     public void OnLook(CallbackContext ctx)
@@ -125,7 +131,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnFire(CallbackContext ctx)
     {
-        if (!ctx.performed) return;
+        if (!ctx.performed)
+        {
+            animator.SetBool("Attack", false);
+            return;
+        }
+
+        animator.SetBool("Attack", true);
         //this is here because webGL sucks basically
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

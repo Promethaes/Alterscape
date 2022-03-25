@@ -206,12 +206,13 @@ MonoBehaviour:
   hasMomentum: 0
   momentumBuildupSpeed: 0.17
   maxMomentum: 0.1
-  jumpScalar: 4
+  jumpScalar: 10
   mouseSensitivity: 4.5
   upDownLimit: 90
   cameraTransform: {fileID: 1981074519}
   rigidbody: {fileID: 27236307}
   groundCollider: {fileID: 1806869881}
+  animator: {fileID: 27236304}
   doMovementFalloff: 1
   canLook: 1
 --- !u!54 &27236307
@@ -307,6 +308,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 696f1756-6829-4e87-a14a-e171f57d2721
     m_ActionName: Game/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 27236306}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dd206073-819a-4c8d-9bda-5b7b9c95033d
+    m_ActionName: Game/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
